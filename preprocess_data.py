@@ -290,6 +290,7 @@ def save_aida_processed(data, args, part):
 
 
 def main(args):
+    '''
     # process raw aida
     aida_train = process_raw_aida(args.raw_dir, 'train')
     aida_val = process_raw_aida(args.raw_dir, 'val')
@@ -320,6 +321,7 @@ def main(args):
     save_aida(tokenized_val, args, 'val')
     save_aida(tokenized_test, args, 'test')
     print('process kilt kb ...')
+    '''
     process_kilt_kb(args)
 
 
