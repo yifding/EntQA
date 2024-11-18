@@ -265,8 +265,8 @@ def process_kilt_kb(args):
             window = get_entity_window(item, tokenizer, args.max_ent_len)
             entity_dict = tokenizer.encode_plus(window,
                                                 add_special_tokens=True,
-                                                max_ent_length=args.max_ent_len,
-                                                pad_to_max_ent_length=True,
+                                                max_length=args.max_ent_len,
+                                                pad_to_max_length=True,
                                                 truncation=True)
             field['wikipedia_id'] = item['wikipedia_id']
             field['title'] = item['wikipedia_title']
