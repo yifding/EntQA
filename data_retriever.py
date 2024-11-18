@@ -7,6 +7,7 @@ import faiss
 from utils import sample_range_excluding
 import random
 from preprocess_data import normalize_string
+from tqdm import tqdm
 
 
 # for embedding entities during inference
@@ -207,7 +208,7 @@ def get_embeddings(loader, model, is_mention, device):
     model.eval()
     embeddings = []
     with torch.no_grad():
-        for i, batch in enumerate(loader):
+        for i, batch in tqdm(enumerate(loader)):
             batch = tuple(t.to(device) for t in batch)
             input_ids, input_masks = batch
             k1, k2 = ('mention_token_ids', 'mention_masks') if is_mention else \
