@@ -265,8 +265,8 @@ def process_kilt_kb(args):
             window = get_entity_window(item, tokenizer, args.max_ent_len)
             entity_dict = tokenizer.encode_plus(window,
                                                 add_special_tokens=True,
-                                                max_ent_length=args.max_ent_len,
-                                                pad_to_max_ent_length=True,
+                                                max_length=args.max_ent_len,
+                                                pad_to_max_length=True,
                                                 truncation=True)
             field['wikipedia_id'] = item['wikipedia_id']
             field['title'] = item['wikipedia_title']
@@ -290,6 +290,7 @@ def save_aida_processed(data, args, part):
 
 
 def main(args):
+    '''
     # process raw aida
     aida_train = process_raw_aida(args.raw_dir, 'train')
     aida_val = process_raw_aida(args.raw_dir, 'val')
@@ -320,6 +321,7 @@ def main(args):
     save_aida(tokenized_val, args, 'val')
     save_aida(tokenized_test, args, 'test')
     print('process kilt kb ...')
+    '''
     process_kilt_kb(args)
 
 
