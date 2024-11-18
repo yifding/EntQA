@@ -7,14 +7,12 @@ This repo provides the code for our ICLR 2022 paper [EntQA: Entitly Linking as Q
 ```
 conda create --name entqa python=3.8
 conda activate entqa
-pip install -r requirements.txt
+pip -r install requirements.txt
 conda install -c pytorch faiss-gpu cudatoolkit=11.0
 
 ```
 
 ## Download data & preprocess
-All the preprocessed data can be downloaded [here](https://drive.google.com/drive/folders/1DQvfjKOuOoUE3YcYrg2GIvODaOEZXMdH?usp=sharing), you can skip following preprocess steps. 
-Or preprocess by yourself: 
 1. Download KILT wikipedia knowledge base [here](https://github.com/facebookresearch/KILT) and put it under a kb directory like /raw_kb/  \
 2. Download BLINK pretrained retriever model [here](https://github.com/facebookresearch/BLINK)  \
 3. Download AIDA CoNLL datasets [here](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/ambiverse-nlu/aida/downloads) and place them under a raw aida directory like /raw_aida/ \
@@ -23,7 +21,7 @@ Or preprocess by yourself:
 ```
 python preprocess_data.py \
 --raw_dir /raw_aida/  --out_aida_dir /retriever_input/  \
---raw_kb_path /raw_kb/[kilt wikipedia file name] --out_kb_path /kb/entities_kilt.json \
+--raw_kb_dir /raw_kb/ --out_kb_path /kb/entities_kilt.json \
 --max_ent_len 128  --instance_length 32 --stride 16 --pos_prop 1 --title_map_dir /raw_aida/
 
 ```
