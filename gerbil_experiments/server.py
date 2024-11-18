@@ -69,6 +69,8 @@ def terminate():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    parser.add_argument('--device', type=str, default='cpu',
+                        help='log path')
     parser.add_argument('--log_path', type=str,
                         help='log path')
     parser.add_argument('--blink_dir', type=str,

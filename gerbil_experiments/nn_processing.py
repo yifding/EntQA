@@ -26,10 +26,13 @@ class Annotator(object):
         self.args = args
         self.logger = self.set_logger()
         self.all_cands_embeds, self.entities = self.load_cands_part()
-        self.my_device = torch.device('cuda' if torch.cuda.is_available()
-                                      else 'cpu')
+        # self.my_device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        # **YD** change the device to cpu
+        self.my_device = torch.device(args.device)
         self.tokenizer = BertTokenizer.from_pretrained('bert-large-uncased')
-        self.dp = torch.cuda.device_count() > 1
+        # self.dp = torch.cuda.device_count() > 1
+        # **YD** change the dp to false
+        self.dp = False
         self.config = {
             "top_k": 100,
             "biencoder_model": self.args.blink_dir + "biencoder_wiki_large.bin",
@@ -76,6 +79,8 @@ class Annotator(object):
         return all_cands_embeds, entities
 
     def get_predicts(self, document):
+        # **YD** reduce memory usage by turning off gradients
+        torch.set_grad_enabled(False)
         samples_retriever, token2char_start, \
         token2char_end = process_raw_data(document,
                                           self.tokenizer,
@@ -93,7 +98,7 @@ class Annotator(object):
         top_k_test, scores_k_test = get_hard_negative(test_mention_embeds,
                                                       self.all_cands_embeds,
                                                       self.args.k, 0, False)
-        self.logger.log('reader part')
+        # self.logger.log('reader part')
         samples_reader = get_reader_input(samples_retriever, top_k_test,
                                           self.entities)
         reader_loader = get_reader_loader(samples_reader, self.tokenizer,
